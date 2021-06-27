@@ -1,0 +1,25 @@
+{
+  "name": "smobot",
+  "version": "0.0.0",
+  "description": "smobot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "lordhewt",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "jsdom": "^16.5.3",
+    "node-libcurl": "^2.3.3"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/lordhewt/smobot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lordhewt/smobot/issues"
+  },
+  "homepage": "https://github.com/lordhewt/smobot#readme"
+}
