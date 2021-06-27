@@ -10,6 +10,7 @@
   "license": "GPL-3.0",
   "dependencies": {
     "discord.js": "^12.5.3",
+    "dotenv": "^10.0.0",
     "jsdom": "^16.5.3",
     "node-libcurl": "^2.3.3"
   },
