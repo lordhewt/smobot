@@ -3,7 +3,7 @@ const { Curl, CurlFeature } = require('node-libcurl');
 const { JSDOM } = require('jsdom');
 const Discord = require('discord.js');
 
-require('dotenv').config();
+const env = (require('dotenv').config({path:__dirname+'/.env'})).parsed;
 
 const client = new Discord.Client({intents: [Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES]});
 
@@ -40,7 +40,7 @@ async function curConvert(cur,message){
     var dest = data[1].split('>')[1].toUpperCase();
     var amt = data[2]-0;
 
-    var url = "https://free.currconv.com/api/v7/convert?q="+orig+"_"+dest+"&compact=ultra&apiKey="+process.env.FCC_API_KEY;
+    var url = "https://free.currconv.com/api/v7/convert?q="+orig+"_"+dest+"&compact=ultra&apiKey="+env.FCC_API_KEY;
 
     const conv = await request(url,true);
     var rate = JSON.parse(conv)[orig+"_"+dest];
@@ -130,4 +130,4 @@ async function process(url, message){
     message.channel.send(msg);
 }
 
-client.login(process.env.DISCORD_BOT_TOKEN);
+client.login(env.DISCORD_BOT_TOKEN);
