@@ -11,28 +11,63 @@ client.on('ready', () => {
     console.log('Logged in as', client.user.username);
 });
 
-const regx = /(?:(?:https?|http):\/\/|www\.|m\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])/igm;
-const curegx = /(cur) ([A-Za-z][A-Za-z][A-Za-z])(>)([A-Za-z][A-Za-z][A-Za-z]) ([0-9.]+)/g;
+require('./regex');
 
 client.on('message', message => {
     if(message.author == client.user) return;
 
-    const cur = message.content.match(curegx);
-    const urls = message.content.match(regx);
+    checkCommand(regx,message);
 
-    if(urls == null && cur == null) return;
-    if(cur != null){curConvert(cur[0],message);return;}
-    if(urls.length < 1) return;
-    let firstUrl;
-    try{
-        firstUrl = new url.URL(urls[0]);
-    }catch(err){
-        return;
+    // if(urls == null && cur == null) return;
+    // if(cur != null){curConvert(cur[0],message);return;}
+    // if(urls.length < 1) return;
+    // let firstUrl;
+    // try{
+    //     firstUrl = new url.URL(urls[0]);
+    // }catch(err){
+    //     return;
+    // }
+
+    // if(firstUrl.host !== 'instagram.com' && firstUrl.host !== 'www.instagram.com') return;
+    // else process(firstUrl.href, message);
+});
+
+function checkCommand(rgx,message){
+    var cmd;
+    var clientMsg;
+    var rgkeys = rgx.keys();
+
+    // const cur = message.content.match(curegx);
+    // const urls = message.content.match(regx);
+
+    for(key of rgkeys){
+        clientMsg = message.content.match(rgx[key]);
+        if(clientMsg!=null){
+            cmd=key;
+            break;
+        }
     }
 
-    if(firstUrl.host !== 'instagram.com' && firstUrl.host !== 'www.instagram.com') return;
-    else process(firstUrl.href, message);
-});
+    switch(cmd){
+        case 'ig_embed' :
+                let firstUrl;
+                try{
+                    firstUrl = new clientMsg.URL(urls[0]);
+                }catch(err){
+                    return;
+                }
+
+                if(firstUrl.host !== 'instagram.com' && firstUrl.host !== 'www.instagram.com') return;
+                else process(firstUrl.href, message);
+            break;
+        case 'cur_conv' : 
+                curConvert(cur[0],message);
+            break;
+    }
+
+
+
+}
 
 async function curConvert(cur,message){
     var data = cur.split(' ');
