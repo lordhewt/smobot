@@ -103,7 +103,7 @@ async function getJidat(message){
     const offset = Math.floor(Math.random(1,100));
     const html = await request('http://www.google.ca/images?q=forehead&start='+offset+'&gbv=1');
     const searchPage = new JSDOM(html).window.document;
-    const metas = searchPage.getElementsByTagName('img');
+    const imgs = searchPage.getElementsByTagName('img');
     var foundImage;
     var msg;
 
