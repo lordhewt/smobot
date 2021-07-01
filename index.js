@@ -16,7 +16,7 @@ require('./regex');
 client.on('message', message => {
     if(message.author == client.user) return;
 
-    checkCommand(regx,message);
+    checkCommand(regexList,regexKeys,message);
 
     // if(urls == null && cur == null) return;
     // if(cur != null){curConvert(cur[0],message);return;}
@@ -32,21 +32,19 @@ client.on('message', message => {
     // else process(firstUrl.href, message);
 });
 
-function checkCommand(rgx,message){
+function checkCommand(rgx,keys,message){
     var cmd;
     var clientMsg;
-    var rgkeys = rgx.keys();
-
-    // const cur = message.content.match(curegx);
-    // const urls = message.content.match(regx);
-
-    for(key of rgkeys){
-        clientMsg = message.content.match(rgx[key]);
+    
+    for(var i=0;i<rgx.length;i++){
+        clientMsg = message.content.match(rgx[i]);
         if(clientMsg!=null){
-            cmd=key;
+            cmd=keys[i];
             break;
         }
     }
+
+
 
     switch(cmd){
         case 'ig_embed' :
@@ -165,4 +163,4 @@ async function process(url, message){
     message.channel.send(msg);
 }
 
-client.login(env.DISCORD_BOT_TOKEN);
+client.login(env.DISCORD_BOT_TOKEN_STAGING);
