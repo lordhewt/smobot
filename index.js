@@ -104,6 +104,8 @@ async function process(url, message){
     const metas = searchPage.getElementsByTagName('meta');
     var foundVideo;
     var foundImage;
+    var msg;
+
     for(meta of metas){
         if(meta.getAttribute('name') == 'medium') medium = meta.getAttribute('content');
         const property = meta.getAttribute('property');
@@ -126,7 +128,7 @@ async function process(url, message){
             }else{
                 message.channel.send('', {files: [{attachment: video, name: 'instagram.mp4'}]});
             }
-            var msg = new Discord.MessageEmbed({
+                msg = new Discord.MessageEmbed({
                                             hexColor:'',
                                             title:title,
                                             description:description,
@@ -137,15 +139,17 @@ async function process(url, message){
                                             }
                                         });
         }else if(foundImage != undefined){
-            var msg = new Discord.MessageEmbed().setColor('#00ff00')
+                msg = new Discord.MessageEmbed().setColor('#00ff00')
                                                 .setTitle(title)
                                                 .setDescription(description)
                                                 .setImage(foundImage);
         }
-    }else{
-            var msg = new Discord.MessageEmbed().setColor('#ff0000')
+    }
+
+    if(msg==null||msg==""){
+                msg = new Discord.MessageEmbed().setColor('#ff0000')
                                                 .setTitle("ERROR")
-                                                .setDescription("Yah ga bisa :menangos:");
+                                                .setDescription("Yah ga bisa 😭");
     }
     
     message.channel.send(msg);
