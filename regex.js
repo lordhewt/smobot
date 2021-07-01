@@ -12,5 +12,5 @@ const regexKeys =
 	];
 
 
-export regexList = regexList;
-export regexKeys = regexKeys;
+exports.regexList = regexList;
+exports.regexKeys = regexKeys;
