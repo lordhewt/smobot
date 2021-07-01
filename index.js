@@ -1,4 +1,4 @@
-const mode = 'staging';
+const staging_mode = 1;
 const url = require('url');
 const { Curl, CurlFeature } = require('node-libcurl');
 const { JSDOM } = require('jsdom');
@@ -107,11 +107,9 @@ async function getJidat(message){
     var foundImage;
     var msg;
 
-    for(img in imgs){
-        if(img.getAttribute('src').substr(0,4) == 'http'){
-            foundImage = img.getAttribute('src');
-            break;
-        }
+    for(img of imgs){                                                        
+        if(img.getAttribute('src')) foundImage = img.getAttribute('src');
+        if(foundImage.substr(0,4) == 'http') break;                      
     }
 
     if(foundImage!=undefined){
@@ -189,8 +187,8 @@ async function process(url, message){
     message.channel.send(msg);
 }
 
-if(mode == 'production'){
+if(staging_mode == 0){
     client.login(env.DISCORD_BOT_TOKEN);
-}else if(mode == 'staging'){
+}else if(staging_mode == 1){
     client.login(env.DISCORD_BOT_TOKEN_STAGING);
 }
