@@ -49,7 +49,7 @@ function checkCommand(rgx,keys,message){
                 curConvert(clientMsg[0],message);
             break;
         case 'jidat' : 
-                getJidat(,message);
+                getJidat(message);
             break;
     }
 
