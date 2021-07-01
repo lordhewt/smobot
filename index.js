@@ -114,8 +114,8 @@ async function getJidat(message){
 
     if(foundImage!=undefined){
         msg = new Discord.MessageEmbed().setColor('#00ff00')
-                                        .setTitle(title)
-                                        .setDescription(description)
+                                        .setTitle("Jidat")
+                                        .setDescription("Hehe jidat")
                                         .setImage(foundImage);
 
     }
