@@ -1,3 +1,4 @@
+const mode = 'staging';
 const url = require('url');
 const { Curl, CurlFeature } = require('node-libcurl');
 const { JSDOM } = require('jsdom');
@@ -32,8 +33,6 @@ function checkCommand(rgx,keys,message){
         }
     }
 
-
-
     switch(cmd){
         case 'ig_embed' :
                 let firstUrl;
@@ -49,9 +48,10 @@ function checkCommand(rgx,keys,message){
         case 'cur_conv' : 
                 curConvert(clientMsg[0],message);
             break;
+        case 'jidat' : 
+                getJidat(,message);
+            break;
     }
-
-
 
 }
 
@@ -96,6 +96,40 @@ function request(url,raw=false){
     });
     curl.perform();
     });
+}
+
+
+async function getJidat(message){
+    const offset = Math.floor(Math.random(1,100));
+    const html = await request('http://www.google.ca/images?q=forehead&start='+offset+'&gbv=1');
+    const searchPage = new JSDOM(html).window.document;
+    const metas = searchPage.getElementsByTagName('img');
+    var foundImage;
+    var msg;
+
+    for(img in imgs){
+        if(img.getAttribute('src').substr(0,4) == 'http'){
+            foundImage = img.getAttribute('src');
+            break;
+        }
+    }
+
+    if(foundImage!=undefined){
+        msg = new Discord.MessageEmbed().setColor('#00ff00')
+                                        .setTitle(title)
+                                        .setDescription(description)
+                                        .setImage(foundImage);
+
+    }
+
+    if(msg==null||msg==''){
+        msg = new Discord.MessageEmbed().setColor('#ff0000')
+                                        .setTitle('')
+                                        .setDescription('Yah ga bisa 😭');
+    }
+
+    message.channel.send(msg);
+
 }
 
 async function process(url, message){
@@ -155,4 +189,8 @@ async function process(url, message){
     message.channel.send(msg);
 }
 
-client.login(env.DISCORD_BOT_TOKEN_STAGING);
+if(mode == 'production'){
+    client.login(env.DISCORD_BOT_TOKEN);
+}else if(mode == 'staging'){
+    client.login(env.DISCORD_BOT_TOKEN_STAGING);
+}
