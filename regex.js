@@ -10,3 +10,7 @@ const regexKeys =
 		'ig_embed',
 		'cur_conv'
 	];
+
+
+export regexList = regexList;
+export regexKeys = regexKeys;

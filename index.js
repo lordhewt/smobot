@@ -11,25 +11,13 @@ client.on('ready', () => {
     console.log('Logged in as', client.user.username);
 });
 
-require('./regex');
+var regex = require('./regex');
 
 client.on('message', message => {
     if(message.author == client.user) return;
 
-    checkCommand(regexList,regexKeys,message);
-
-    // if(urls == null && cur == null) return;
-    // if(cur != null){curConvert(cur[0],message);return;}
-    // if(urls.length < 1) return;
-    // let firstUrl;
-    // try{
-    //     firstUrl = new url.URL(urls[0]);
-    // }catch(err){
-    //     return;
-    // }
-
-    // if(firstUrl.host !== 'instagram.com' && firstUrl.host !== 'www.instagram.com') return;
-    // else process(firstUrl.href, message);
+    checkCommand(regex.regexList,regex.regexKeys,message);
+    
 });
 
 function checkCommand(rgx,keys,message){
@@ -50,7 +38,7 @@ function checkCommand(rgx,keys,message){
         case 'ig_embed' :
                 let firstUrl;
                 try{
-                    firstUrl = new clientMsg.URL(urls[0]);
+                    firstUrl = new url.URL(clientMsg[0]);
                 }catch(err){
                     return;
                 }
@@ -59,7 +47,7 @@ function checkCommand(rgx,keys,message){
                 else process(firstUrl.href, message);
             break;
         case 'cur_conv' : 
-                curConvert(cur[0],message);
+                curConvert(clientMsg[0],message);
             break;
     }
 
